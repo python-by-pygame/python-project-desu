@@ -1,3 +1,61 @@
-import this
 import pygame
-//請組員趕緊想出主題
+
+pygame.init()
+screen = pygame.display.set_mode((400,500))
+clock = pygame.time.Clock()
+running = True
+
+
+class Square(pygame.sprite.Sprite):
+     def __init__(self, color, width, height,x,y):
+          pygame.sprite.Sprite.__init__(self)
+
+          self.image = pygame.Surface([width,height])
+          self.image.fill(color)
+
+          self.rect = self.image.get_rect()
+          self.rect.centerx = x
+          self.rect.centery = -y
+     def update(self):
+          key_pressed = pygame.key.get_pressed()
+          if key_pressed[pygame.K_RIGHT]:
+               if self.rect.centerx <= 25:
+                self.rect.x += 350
+          if key_pressed[pygame.K_LEFT]:
+               if self.rect.centerx >=375:
+                self.rect.x -= 350
+          if key_pressed[pygame.K_UP]:
+               if self.rect.centery >= 475:
+                self.rect.y -= 450
+          if key_pressed[pygame.K_DOWN]:
+               if self.rect.centery <= 25:
+                self.rect.y += 450
+          
+        
+         
+
+all_sprites = pygame.sprite.Group()
+square1 = Square("red",50,50,25,-475)
+all_sprites.add(square1)
+
+
+while running:
+    
+    #取得輸入
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+                running = False
+    
+    #更新遊戲
+    all_sprites.update()
+
+    #畫面顯示
+    screen.fill("white")
+    all_sprites.draw(screen)
+    pygame.display.update()
+
+    clock.tick(60)
+
+pygame.quit()
+
+#請組員趕緊想出主題
